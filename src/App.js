@@ -1,18 +1,27 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Counter } from "./components/Counter";
+import { Mobx } from "./components/Mobx";
+import { Parent } from "./components/Parent";
+import { NavbarComponent } from "./components/NavbarComponent";
 import { rootStoresContext, useStores } from "./stores/RootStore";
 
 function App() {
   const stores = useStores();
   return (
-    <rootStoresContext.Provider value={stores}>
-      <div className='App'>
-        <Counter />
-      </div>
-    </rootStoresContext.Provider>
+    <Router>
+      <rootStoresContext.Provider value={stores}>
+        <div className='App'>
+          <NavbarComponent />
+          <Switch>
+            <Route exact path='/' component={Mobx} />
+            <Route path='/hooks' component={Parent} />
+          </Switch>
+        </div>
+      </rootStoresContext.Provider>
+    </Router>
   );
 }
 
